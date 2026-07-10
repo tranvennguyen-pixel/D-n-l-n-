@@ -2,118 +2,220 @@
 <html lang="vi">
 <head>
     <meta charset="UTF-8">
-    <title>Happy Birthday Cục Dàng</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Món Quà Bất Ngờ</title>
     <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
     <style>
-        body { margin: 0; background: #000; color: #fff; font-family: 'Arial', sans-serif; text-align: center; overflow-x: hidden; }
+        body { margin: 0; background: #000; color: #fff; font-family: 'Arial', sans-serif; text-align: center; overflow: hidden; }
         
-        /* Màn hình chờ */
-        #intro { height: 100vh; display: flex; flex-direction: column; justify-content: center; align-items: center; }
-        button { padding: 20px 40px; font-size: 22px; border-radius: 50px; border: none; background: linear-gradient(45deg, #ff4d6d, #ff758c); color: white; cursor: pointer; font-weight: bold; box-shadow: 0 0 20px rgba(255, 77, 109, 0.5); animation: pulse 1.5s infinite; }
-        @keyframes pulse { 0% { transform: scale(1); } 50% { transform: scale(1.05); } 100% { transform: scale(1); } }
-        
-        /* Nội dung chính */
-        #main-content { display: none; padding: 40px 20px; }
-        
-        /* Bánh kem & Chữ xoay */
-        .cake-container { position: relative; width: 300px; height: 300px; margin: 0 auto 20px; display: flex; justify-content: center; align-items: center; }
-        .cake-gif { width: 120px; border-radius: 50%; z-index: 10; box-shadow: 0 0 30px #ff4d6d; }
-        .orbit { position: absolute; width: 100%; height: 100%; animation: spin 8s linear infinite; }
-        .orbit-text { position: absolute; top: 50%; left: 50%; font-size: 20px; font-weight: bold; color: #ffdee9; text-shadow: 0 0 10px #ff4d6d; white-space: nowrap; }
-        
-        /* Tọa độ 3 chữ xoay xung quanh bánh */
-        .text-1 { transform: translate(-50%, -50%) rotate(0deg) translateY(-130px) rotate(0deg); }
-        .text-2 { transform: translate(-50%, -50%) rotate(120deg) translateY(-130px) rotate(-120deg); }
-        .text-3 { transform: translate(-50%, -50%) rotate(240deg) translateY(-130px) rotate(-240deg); }
+        /* CÁC GIAI ĐOẠN (PHASES) */
+        .phase { display: none; width: 100vw; height: 100vh; flex-direction: column; justify-content: center; align-items: center; position: absolute; top: 0; left: 0; }
+        #phase1 { display: flex; }
+        #phase4 { height: auto; min-height: 100vh; justify-content: flex-start; padding: 20px; box-sizing: border-box; overflow-y: auto; }
+
+        /* NÚT BẤM CÁC MÀU */
+        button { padding: 15px 30px; font-size: 20px; border-radius: 30px; border: none; cursor: pointer; font-weight: bold; z-index: 50; position: relative; box-shadow: 0 0 15px rgba(255,255,255,0.5); animation: pulse 1.5s infinite; }
+        .btn-red { background: #ff4d6d; color: white; }
+        .btn-blue { background: #007bff; color: white; margin-top: 30px; }
+        .btn-green { background: #28a745; color: white; margin-top: 30px; }
+        @keyframes pulse { 0% { transform: scale(1); } 50% { transform: scale(1.1); } 100% { transform: scale(1); } }
+
+        /* HIỆU ỨNG MƯA CHỮ (PHASE 1) */
+        .falling-text { position: absolute; color: #ff4d6d; font-size: 18px; font-weight: bold; opacity: 0.7; animation: fall linear infinite; }
+        @keyframes fall { to { transform: translateY(100vh); } }
+
+        /* BÁNH KEM 3D & CHỮ XOAY (PHASE 2) */
+        .cake-container { position: relative; width: 350px; height: 350px; display: flex; justify-content: center; align-items: center; margin-bottom: 20px; }
+        .cake-3d { width: 180px; z-index: 10; filter: drop-shadow(0 0 20px #ffdee9); }
+        .orbit { position: absolute; width: 100%; height: 100%; animation: spin 10s linear infinite; }
+        .orbit-text { position: absolute; top: 50%; left: 50%; font-size: 22px; font-weight: bold; color: #ffdee9; text-shadow: 0 0 15px #ff4d6d; white-space: nowrap; }
+        .t1 { transform: translate(-50%, -50%) rotate(0deg) translateY(-160px) rotate(0deg); }
+        .t2 { transform: translate(-50%, -50%) rotate(120deg) translateY(-160px) rotate(-120deg); }
+        .t3 { transform: translate(-50%, -50%) rotate(240deg) translateY(-160px) rotate(-240deg); }
         @keyframes spin { 100% { transform: rotate(360deg); } }
 
-        /* Bức thư */
-        .letter-container { position: relative; max-width: 800px; margin: 30px auto; z-index: 5; }
-        #message { font-size: 20px; color: #fff; line-height: 1.8; border: 2px solid #ff4d6d; padding: 30px; border-radius: 20px; background: rgba(255,77,109,0.15); box-shadow: 0 0 15px rgba(255,77,109,0.3); text-align: left; }
-        
-        /* Lưới 7 Ảnh */
-        .album-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 15px; margin-top: 40px; }
-        img.album-img { width: 100%; height: 200px; object-fit: cover; border-radius: 15px; border: 3px solid #ff4d6d; transition: 0.3s; box-shadow: 0 5px 15px rgba(0,0,0,0.5); }
-        img.album-img:hover { transform: scale(1.05) rotate(2deg); border-color: #ffdee9; }
+        /* BÓNG BAY */
+        .balloon { position: absolute; bottom: -100px; width: 50px; height: 60px; background: #ff4d6d; border-radius: 50% 50% 50% 50% / 40% 40% 60% 60%; animation: floatUp 5s ease-in-out infinite; opacity: 0.8; }
+        .balloon::before { content: ""; position: absolute; bottom: -10px; left: 22px; width: 2px; height: 30px; background: white; }
+        @keyframes floatUp { to { transform: translateY(-120vh) translateX(20px); } }
+
+        /* BỨC THƯ (PHASE 3) */
+        .letter-box { background: rgba(255, 77, 109, 0.15); border: 2px solid #ff4d6d; border-radius: 15px; padding: 30px; max-width: 90%; width: 600px; position: relative; box-shadow: 0 0 30px rgba(255, 77, 109, 0.5); }
+        .heart-center { font-size: 50px; color: #ff4d6d; margin-bottom: 10px; animation: beat 1s infinite; }
+        @keyframes beat { 0%, 100% { transform: scale(1); } 50% { transform: scale(1.3); } }
+        #message-text { font-size: 20px; line-height: 1.6; text-align: left; min-height: 150px; }
+        .floating-heart { position: absolute; color: #ff4d6d; font-size: 20px; animation: floatHeart 2s ease-out infinite; opacity: 0; }
+        @keyframes floatHeart { 0% { transform: translateY(0) scale(1); opacity: 1; } 100% { transform: translateY(-100px) scale(1.5); opacity: 0; } }
+
+        /* ALBUM ẢNH FULL MÀN HÌNH (PHASE 4) */
+        .gallery { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 20px; width: 100%; max-width: 1200px; margin: 0 auto; }
+        .gallery img { width: 100%; height: 300px; object-fit: cover; border-radius: 15px; border: 4px solid #ff4d6d; box-shadow: 0 0 20px rgba(255,77,109,0.4); animation: popIn 0.5s ease-out backwards; }
+        @keyframes popIn { from { transform: scale(0); opacity: 0; } to { transform: scale(1); opacity: 1; } }
     </style>
 </head>
 <body>
 
-<div id="intro">
-    <h1 style="color: #ff4d6d; font-size: 40px; text-shadow: 0 0 10px #ff4d6d;">MÓN QUÀ BÍ MẬT</h1>
-    <button onclick="start()">BẤM VÀO ĐÂY BÉ ƠI</button>
-</div>
+    <!-- ÂM THANH (Lấy đúng tên file trên GitHub của bạn) -->
+    <audio id="sound-phaohoa" src="Phaohoa.mp3" loop></audio>
+    <audio id="sound-votay" src="Votay.mp3"></audio>
+    <audio id="sound-chucmung" src="Tiengchucmungsinhnhat.mp3"></audio>
 
-<div id="main-content">
-    
-    <div class="cake-container">
-        <img class="cake-gif" src="https://i.giphy.com/media/v1.Y2lkPTc5MGI3NjExNHJ4ZzJ5eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4JmVwPXYxX2ludGVybmFsX2dpZl9ieV9pZCZjdD1n/l41lTjJp8Zz0y5z6G/giphy.gif" alt="Bánh kem">
-        <div class="orbit">
-            <div class="orbit-text text-1">Happy Birthday</div>
-            <div class="orbit-text text-2">Anh Yêu Em</div>
-            <div class="orbit-text text-3">Anh Nhớ Em</div>
+    <!-- GIAI ĐOẠN 1: Màn hình chờ & Mưa chữ -->
+    <div id="phase1" class="phase">
+        <div id="rain-container"></div>
+        <button class="btn-red" onclick="goToPhase2()">Bấm vô đây nè bé yêu ❤</button>
+    </div>
+
+    <!-- GIAI ĐOẠN 2: Bánh kem 3D & Chữ xoay & Pháo hoa -->
+    <div id="phase2" class="phase">
+        <div id="balloons-p2"></div>
+        <div class="cake-container">
+            <!-- Ảnh GIF bánh kem 3D lấp lánh -->
+            <img class="cake-3d" src="https://i.pinimg.com/originals/a0/0a/63/a00a631f47fcb1ddbcf9a4fb1f4df4f5.gif" alt="Bánh kem 3D">
+            <div class="orbit">
+                <div class="orbit-text t1">Anh Yêu Em</div>
+                <div class="orbit-text t2">Happy Birthday</div>
+                <div class="orbit-text t3">Cục Dàng Của Anh</div>
+            </div>
+        </div>
+        <button class="btn-blue" onclick="goToPhase3()">Đọc Thư Tình</button>
+    </div>
+
+    <!-- GIAI ĐOẠN 3: Bức thư & Vỗ tay & Chữ chạy -->
+    <div id="phase3" class="phase">
+        <div class="letter-box">
+            <div class="heart-center">❤️</div>
+            <div id="message-text"></div>
+        </div>
+        <button class="btn-green" onclick="goToPhase4()">Xem Kỷ Niệm</button>
+    </div>
+
+    <!-- GIAI ĐOẠN 4: 7 Ảnh Full & Chúc mừng sinh nhật -->
+    <div id="phase4" class="phase">
+        <div id="balloons-p4"></div>
+        <h1 style="color: #ff4d6d; text-shadow: 0 0 15px #ff4d6d; margin-bottom: 30px;">HAPPY BIRTHDAY BÉ YÊU!</h1>
+        <div class="gallery">
+            <img src="Ảnh1.jpeg" style="animation-delay: 0.1s;">
+            <img src="Ảnh2.jpeg" style="animation-delay: 0.2s;">
+            <img src="Ảnh3.jpeg" style="animation-delay: 0.3s;">
+            <img src="Ảnh4.jpeg" style="animation-delay: 0.4s;">
+            <img src="Ảnh5.jpeg" style="animation-delay: 0.5s;">
+            <img src="Ảnh6.jpeg" style="animation-delay: 0.6s;">
+            <img src="Ảnh7.jpeg" style="animation-delay: 0.7s;">
         </div>
     </div>
 
-    <div class="letter-container">
-        <h2 style="color: #ff4d6d; text-align: center; margin-bottom: 20px;">Gửi Cục Dàng Iuuu Dấu 💗</h2>
-        <div id="message"></div>
-    </div>
+    <script>
+        // Hàm tạo hiệu ứng chung
+        function stopAllAudio() {
+            document.getElementById('sound-phaohoa').pause();
+            document.getElementById('sound-votay').pause();
+            document.getElementById('sound-chucmung').pause();
+        }
 
-    <div class="album-grid">
-        <img class="album-img" src="Ảnh1.jpeg" alt="Ảnh 1">
-        <img class="album-img" src="Ảnh2.jpeg" alt="Ảnh 2">
-        <img class="album-img" src="Ảnh3.jpeg" alt="Ảnh 3">
-        <img class="album-img" src="Ảnh4.jpeg" alt="Ảnh 4">
-        <img class="album-img" src="Ảnh5.jpeg" alt="Ảnh 5">
-        <img class="album-img" src="Ảnh6.jpeg" alt="Ảnh 6">
-        <img class="album-img" src="Ảnh7.jpeg" alt="Ảnh 7">
-    </div>
-</div>
-
-<audio id="myAudio" loop>
-    <source src="Phaohoa.mp3" type="audio/mpeg">
-</audio>
-
-<script>
-    // Hàm tạo pháo hoa liên tục
-    function fireConfetti() {
-        var duration = 15 * 1000;
-        var animationEnd = Date.now() + duration;
-        var defaults = { startVelocity: 30, spread: 360, ticks: 60, zIndex: 0 };
-        function randomInRange(min, max) { return Math.random() * (max - min) + min; }
-        var interval = setInterval(function() {
-            var timeLeft = animationEnd - Date.now();
-            if (timeLeft <= 0) { return clearInterval(interval); }
-            var particleCount = 50 * (timeLeft / duration);
-            confetti(Object.assign({}, defaults, { particleCount, origin: { x: randomInRange(0.1, 0.3), y: Math.random() - 0.2 } }));
-            confetti(Object.assign({}, defaults, { particleCount, origin: { x: randomInRange(0.7, 0.9), y: Math.random() - 0.2 } }));
-        }, 250);
-    }
-
-    function start() {
-        // Bật nhạc
-        document.getElementById('myAudio').play();
-        
-        // Chuyển màn hình
-        document.getElementById('intro').style.display = 'none';
-        document.getElementById('main-content').style.display = 'block';
-        
-        // Bắn pháo hoa
-        fireConfetti();
-        
-        // Chữ tự chạy
-        const content = "Chúc cục dàng iuuu dấu của chồng 1 năm sinh nhật thật là vui vẻ nè. Chồng mong là chúng ta sau này và mãi về sau nữa sẽ ở bên nhau thật lâu luôn nè. Chúc cho cục kim cương iuuu dấu của chồng buổi sinh nhật vui vẻ và hạnh phúc đặc biệt năm nay có chồng nè. Chồng hong bt là mấy năm trước heo có đón sinh nhật v ng iu chx mà chồng thì sẽ khác v mấy người trc kia của heo. Chồng hy vọng chồng hong phải là người đầu nhưng mà hy vọng chồng sẽ là người heo cảm thấy hạnh phúc và an toàn vui vẻ khi ở bên và hy vọng chồng sẽ là người cuối cùng của em ạ. Anh yêeeuuu emmm 💗";
-        let i = 0;
-        function typing() {
-            if (i < content.length) {
-                document.getElementById("message").innerHTML += content.charAt(i);
-                i++;
-                setTimeout(typing, 50); // Tốc độ gõ chữ (50ms/chữ)
+        function createBalloons(containerId, count) {
+            const container = document.getElementById(containerId);
+            const colors = ['#ff4d6d', '#ff758c', '#ffdee9', '#007bff', '#28a745'];
+            for(let i=0; i<count; i++) {
+                let balloon = document.createElement('div');
+                balloon.className = 'balloon';
+                balloon.style.left = Math.random() * 100 + 'vw';
+                balloon.style.background = colors[Math.floor(Math.random() * colors.length)];
+                balloon.style.animationDuration = (Math.random() * 3 + 4) + 's';
+                balloon.style.animationDelay = Math.random() * 2 + 's';
+                container.appendChild(balloon);
             }
         }
-        setTimeout(typing, 1000); // Đợi 1 giây rồi mới bắt đầu gõ thư
-    }
-</script>
+
+        function fireworkEffect() {
+            var duration = 15 * 1000;
+            var animationEnd = Date.now() + duration;
+            var interval = setInterval(function() {
+                if (Date.now() > animationEnd) return clearInterval(interval);
+                confetti({ particleCount: 50, spread: 360, origin: { x: Math.random(), y: Math.random() - 0.2 }, zIndex: 0 });
+            }, 250);
+        }
+
+        // TẠO MƯA CHỮ CHO PHASE 1
+        const rainContainer = document.getElementById('rain-container');
+        for(let i = 0; i < 30; i++) {
+            let drop = document.createElement('div');
+            drop.className = 'falling-text';
+            drop.innerText = 'Anh Yêu Em';
+            drop.style.left = Math.random() * 100 + 'vw';
+            drop.style.animationDuration = (Math.random() * 3 + 2) + 's';
+            drop.style.animationDelay = Math.random() * 5 + 's';
+            drop.style.top = -50 + 'px';
+            rainContainer.appendChild(drop);
+        }
+
+        // CHUYỂN PHASE 2 (BÁNH KEM)
+        function goToPhase2() {
+            document.getElementById('phase1').style.display = 'none';
+            document.getElementById('phase2').style.display = 'flex';
+            
+            // Bật pháo hoa & Âm thanh
+            document.getElementById('sound-phaohoa').play();
+            fireworkEffect();
+            createBalloons('balloons-p2', 15);
+        }
+
+        // CHUYỂN PHASE 3 (THƯ TÌNH)
+        function goToPhase3() {
+            document.getElementById('phase2').style.display = 'none';
+            document.getElementById('phase3').style.display = 'flex';
+            
+            // Tắt pháo hoa, bật tiếng vỗ tay
+            document.getElementById('sound-phaohoa').pause();
+            const votay = document.getElementById('sound-votay');
+            votay.currentTime = 0;
+            votay.play();
+
+            // Hiệu ứng tim bay xung quanh
+            setInterval(() => {
+                let heart = document.createElement('div');
+                heart.className = 'floating-heart';
+                heart.innerText = '❤';
+                heart.style.left = (Math.random() * 80 + 10) + '%';
+                heart.style.top = (Math.random() * 80 + 10) + '%';
+                document.querySelector('.letter-box').appendChild(heart);
+                setTimeout(() => heart.remove(), 2000);
+            }, 300);
+
+            // Chữ chạy
+            const content = "Chúc cục dàng iuuu dấu của chồng 1 năm sinh nhật thật là vui vẻ nè chồng mong là chúc ta sau này và mãi về sau nữa sẽ ở bên nhau thật lâu luôn nè chúc cho cục kim cương iuuu dấu của chồng buổi sinh nhật vui vẻ và hạnh phúc đặc biệt năm nay có chồng nè chồng hong bt là mấy năm trước heo có đón sinh nhật v ng iu chx mà chồng thì sẽ khảc v mấy người trc kia của heo chồng hy vọng chồng hong phải là người đầu nhưng mà hy vọng chồng sẽ là người heo cảm thấy hạnh phúc và an toàn vui vẻ khi ở bên và hy vọng chồng sẽ là người cuối cùng của em ạ anhh yeeuuu emmm💗";
+            let i = 0;
+            function typing() {
+                if (i < content.length) {
+                    document.getElementById("message-text").innerHTML += content.charAt(i);
+                    i++;
+                    setTimeout(typing, 50);
+                }
+            }
+            setTimeout(typing, 500);
+        }
+
+        // CHUYỂN PHASE 4 (ALBUM ẢNH)
+        function goToPhase4() {
+            document.getElementById('phase3').style.display = 'none';
+            document.getElementById('phase4').style.display = 'flex';
+            // Cho phép trang có thể cuộn được để xem hết ảnh
+            document.body.style.overflow = 'auto';
+
+            // Dừng các nhạc cũ
+            stopAllAudio();
+
+            // Bật nhạc Happy Birthday & Vỗ tay
+            document.getElementById('sound-chucmung').play();
+            setTimeout(() => {
+                document.getElementById('sound-votay').currentTime = 0;
+                document.getElementById('sound-votay').play();
+            }, 2000); // Tiếng vỗ tay nối tiếp sau 2s
+
+            // Bóng bay & Pháo hoa giấy lần nữa
+            createBalloons('balloons-p4', 20);
+            confetti({ particleCount: 200, spread: 150, origin: { y: 0.1 } });
+        }
+    </script>
 </body>
 </html>
