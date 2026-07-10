@@ -1,215 +1,67 @@
 <!DOCTYPE html>
 <html lang="vi">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Happy Birthday ❤️</title>
-
-<style>
-*{
-margin:0;
-padding:0;
-box-sizing:border-box;
-font-family:Arial,sans-serif;
-} canvas{
-position:fixed;
-top:0;
-left:0;
-width:100%;
-height:100%;
-z-index:-1;
-background:#000;
-}
-
-#startScreen{
-height:100vh;
-display:flex;
-justify-content:center;
-align-items:center;
-}
-
-#birthdayScreen{
-display:flex;
-flex-direction:column;
-align-items:center;
-padding:20px;
-}
-
-.happy{
-font-size:45px;
-color:#ff69b4;
-text-shadow:0 0 20px hotpink;
-animation:pulse 1s infinite;
-}
-
-#photo{
-width:250px;
-border-radius:20px;
-box-shadow:0 0 20px hotpink;
-margin:20px 0;
-}
-
-#letter{
-background:white;
-padding:20px;
-border-radius:20px;
-max-width:700px;
-font-size:20px;
-line-height:1.8;
-}
-
-body{
-background:linear-gradient(135deg,#ff4fa3,#ff89c2);
-display:flex;
-justify-content:center;
-align-items:center;
-height:100vh;
-overflow:hidden;
-}
-
-button{
-padding:18px 40px;
-font-size:28px;
-border:none;
-border-radius:50px;
-background:#ff1493;
-color:white;
-cursor:pointer;
-box-shadow:0 0 25px hotpink;
-transition:.3s;
-}
-
-button:hover{
-transform:scale(1.08);
-}
-
-#letter{
-position:fixed;
-top:50%;
-left:50%;
-transform:translate(-50%,-50%);
-width:90%;
-max-width:700px;
-background:white;
-padding:25px;
-border-radius:20px;
-display:none;
-box-shadow:0 0 30px rgba(0,0,0,.4);
-animation:zoom .5s;
-}
-
-@keyframes zoom{
-from{transform:translate(-50%,-50%) scale(.5);}
-to{transform:translate(-50%,-50%) scale(1);}
-}
-
-h1{
-color:#ff1493;
-text-align:center;
-margin-bottom:20px;
-}
-
-#text{
-font-size:20px;
-line-height:1.8;
-white-space:pre-wrap;
-}
-
-.close{
-margin-top:20px;
-width:100%;
-background:#ff1493;
-padding:15px;
-font-size:22px;
-}
-
-.cursor{
-display:inline-block;
-width:3px;
-background:#ff1493;
-animation:blink .8s infinite;
-}
-
-@keyframes blink{
-50%{opacity:0;}
-}
-</style>
+    <meta charset="UTF-8">
+    <title>Happy Birthday Cục Dàng</title>
+    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.5.1/dist/confetti.browser.min.js"></script>
+    <style>
+        body { margin: 0; background: black; color: white; font-family: 'Arial', sans-serif; text-align: center; overflow-x: hidden; }
+        #intro { height: 100vh; display: flex; flex-direction: column; justify-content: center; align-items: center; }
+        canvas { position: absolute; top: 0; left: 0; z-index: -1; }
+        button { padding: 25px 50px; font-size: 25px; cursor: pointer; border-radius: 50px; border: none; background: #ff4d6d; color: white; font-weight: bold; box-shadow: 0 0 20px #ff4d6d; }
+        #main-content { display: none; padding: 20px; }
+        #message { font-size: 22px; color: #ffdee9; margin: 30px auto; line-height: 1.6; max-width: 800px; font-weight: bold; }
+        .album-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 15px; margin-top: 30px; }
+        img { width: 100%; border-radius: 15px; border: 3px solid #ff4d6d; }
+    </style>
 </head>
-
 <body>
 
-<canvas id="matrix"></canvas>
-
-<div id="startScreen">
-    <button id="enterBtn">💗 BẤM VÀO ĐÂY BÉ ƠI 💗</button>
+<div id="intro">
+    <canvas id="matrix"></canvas>
+    <h1 style="color: #ff4d6d; font-size: 50px;">BIRTHDAY</h1>
+    <button onclick="startExperience()">BẤM VÀO ĐÂY BÉ ƠI</button>
 </div>
 
-<div id="birthdayScreen" style="display:none;">
-    <h1 class="happy">🎂 HAPPY BIRTHDAY 🎂</h1>
-
-    <div id="photoSlider">
-        <img id="photo" src="photo1.jpg">
-    </div>
-
-    <div id="letter">
-        <h2>💌 Gửi bé yêu 💌</h2>
-        <p id="text"></p>
+<div id="main-content">
+    <h1 style="color: #ff4d6d;">HAPPY BIRTHDAY</h1>
+    <div id="message"></div>
+    <div class="album-grid">
+        <img src="anh1.jpg"> <img src="anh2.jpg"> <img src="anh3.jpg"> <img src="anh4.jpg"> <img src="anh5.jpg">
     </div>
 </div>
+
+<audio id="music" loop><source src="nhac.mp3" type="audio/mpeg"></audio>
 
 <script>
+    const canvas = document.getElementById('matrix');
+    const ctx = canvas.getContext('2d');
+    canvas.width = window.innerWidth; canvas.height = window.innerHeight;
+    const drops = Array(Math.floor(canvas.width/50)).fill(1);
+    function draw() {
+        ctx.fillStyle = 'rgba(0, 0, 0, 0.05)'; ctx.fillRect(0, 0, canvas.width, canvas.height);
+        ctx.fillStyle = '#ff4d6d';
+        drops.map((y, i) => { ctx.fillText("Anh yêu em 💗", i * 100, y * 20); drops[i] = y > canvas.height/20 ? 0 : y + 1; });
+    }
+    setInterval(draw, 50);
 
-const message=`Gửi bé yêu của anh ❤️
-
-Chúc cục dàng iuuu dấu của chồng 1 năm sinh nhật thật là vui vẻ nè.
-
-Chồng mong là chúng ta sau này và mãi về sau nữa sẽ ở bên nhau thật lâu luôn nè.
-
-Chúc cho cục kim cương iuuu dấu của chồng có một buổi sinh nhật thật vui vẻ và hạnh phúc.
-
-Đặc biệt năm nay có chồng nè.
-
-Chồng không biết mấy năm trước heo có đón sinh nhật với người yêu chưa, nhưng chồng sẽ khác với những người trước kia của heo.
-
-Chồng hy vọng chồng không phải là người đầu tiên, nhưng sẽ là người cuối cùng của em.
-
-Anh yêu em rất nhiều ❤️`;
-
-❤️ Happy Birthday ❤️`;
-
-function openLetter(){
-
-document.getElementById("letter").style.display="block";
-
-const text=document.getElementById("text");
-
-text.innerHTML="";
-
-let i=0;
-
-function type(){
-
-if(i<message.length){
-
-text.innerHTML+=message.charAt(i);
-
-i++;
-
-setTimeout(type,40);
-
-}else{
-
-text.innerHTML+='<span class="cursor"></span>';
-
-}
-
-}
-
-type();
-
-}
-
+    function startExperience() {
+        document.getElementById('intro').style.display = 'none';
+        document.getElementById('main-content').style.display = 'block';
+        document.getElementById('music').play();
+        confetti({ particleCount: 200, spread: 100, origin: { y: 0.6 } });
+        
+        const content = "Chúc cục dàng iuuu dấu của chồng 1 năm sinh nhật thật là vui vẻ nè chồng mong là chúc ta sau này và mãi về sau nữa sẽ ở bên nhau thật lâu luôn nè chúc cho cục kim cương iuuu dấu của chồng buổi sinh nhật vui vẻ và hạnh phúc đặc biệt năm nay có chồng nè chồng hong bt là mấy năm trước heo có đón sinh nhật v ng iu chx mà chồng thì sẽ khảc v mấy người trc kia của heo chồng hy vọng chồng hong phải là người đầu nhưng mà hy vọng chồng sẽ là người heo cảm thấy hạnh phúc và an toàn vui vẻ khi ở bên và hy vọng chồng sẽ là người cuối cùng của em ạ anhh yeeuuu emmm💗";
+        let i = 0;
+        function typing() {
+            if (i < content.length) {
+                document.getElementById("message").innerHTML += content.charAt(i);
+                i++;
+                setTimeout(typing, 80);
+            }
+        }
+        typing();
+    }
 </script>
-
 </body>
 </html>
