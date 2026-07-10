@@ -11,6 +11,51 @@ margin:0;
 padding:0;
 box-sizing:border-box;
 font-family:Arial,sans-serif;
+} canvas{
+position:fixed;
+top:0;
+left:0;
+width:100%;
+height:100%;
+z-index:-1;
+background:#000;
+}
+
+#startScreen{
+height:100vh;
+display:flex;
+justify-content:center;
+align-items:center;
+}
+
+#birthdayScreen{
+display:flex;
+flex-direction:column;
+align-items:center;
+padding:20px;
+}
+
+.happy{
+font-size:45px;
+color:#ff69b4;
+text-shadow:0 0 20px hotpink;
+animation:pulse 1s infinite;
+}
+
+#photo{
+width:250px;
+border-radius:20px;
+box-shadow:0 0 20px hotpink;
+margin:20px 0;
+}
+
+#letter{
+background:white;
+padding:20px;
+border-radius:20px;
+max-width:700px;
+font-size:20px;
+line-height:1.8;
 }
 
 body{
@@ -93,18 +138,23 @@ animation:blink .8s infinite;
 
 <body>
 
-<button onclick="openLetter()">💗 BẤM VÀO ĐÂY BÉ ƠI 💗</button>
+<canvas id="matrix"></canvas>
 
-<div id="letter">
+<div id="startScreen">
+    <button id="enterBtn">💗 BẤM VÀO ĐÂY BÉ ƠI 💗</button>
+</div>
 
-<h1>🎂 Happy Birthday Bé Yêu ❤️</h1>
+<div id="birthdayScreen" style="display:none;">
+    <h1 class="happy">🎂 HAPPY BIRTHDAY 🎂</h1>
 
-<div id="text"></div>
+    <div id="photoSlider">
+        <img id="photo" src="photo1.jpg">
+    </div>
 
-<button class="close" onclick="document.getElementById('letter').style.display='none'">
-Đóng ❤️
-</button>
-
+    <div id="letter">
+        <h2>💌 Gửi bé yêu 💌</h2>
+        <p id="text"></p>
+    </div>
 </div>
 
 <script>
