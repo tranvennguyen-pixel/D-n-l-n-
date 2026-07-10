@@ -2,127 +2,160 @@
 <html lang="vi">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Happy Birthday ❤️</title>
 
 <style>
-*{margin:0;padding:0;box-sizing:border-box;}
+*{
+margin:0;
+padding:0;
+box-sizing:border-box;
+font-family:Arial,sans-serif;
+}
+
 body{
-background:#000;
-height:100vh;
+background:linear-gradient(135deg,#ff4fa3,#ff89c2);
 display:flex;
 justify-content:center;
 align-items:center;
+height:100vh;
 overflow:hidden;
-font-family:Arial,sans-serif;
-color:#fff;
-}
-
-canvas{
-position:fixed;
-top:0;
-left:0;
-width:100%;
-height:100%;
-z-index:0;
-}
-
-.center{
-position:relative;
-z-index:2;
-text-align:center;
 }
 
 button{
-padding:25px 60px;
-font-size:30px;
+padding:18px 40px;
+font-size:28px;
 border:none;
-border-radius:20px;
+border-radius:50px;
 background:#ff1493;
 color:white;
-box-shadow:0 0 30px #ff1493;
-animation:pulse 1s infinite;
 cursor:pointer;
+box-shadow:0 0 25px hotpink;
+transition:.3s;
 }
 
-@keyframes pulse{
-50%{transform:scale(1.08);}
+button:hover{
+transform:scale(1.08);
+}
+
+#letter{
+position:fixed;
+top:50%;
+left:50%;
+transform:translate(-50%,-50%);
+width:90%;
+max-width:700px;
+background:white;
+padding:25px;
+border-radius:20px;
+display:none;
+box-shadow:0 0 30px rgba(0,0,0,.4);
+animation:zoom .5s;
+}
+
+@keyframes zoom{
+from{transform:translate(-50%,-50%) scale(.5);}
+to{transform:translate(-50%,-50%) scale(1);}
 }
 
 h1{
-display:none;
-font-size:70px;
-color:#ff4fa3;
-text-shadow:0 0 25px #ff4fa3;
-margin-bottom:30px;
+color:#ff1493;
+text-align:center;
+margin-bottom:20px;
+}
+
+#text{
+font-size:20px;
+line-height:1.8;
+white-space:pre-wrap;
+}
+
+.close{
+margin-top:20px;
+width:100%;
+background:#ff1493;
+padding:15px;
+font-size:22px;
+}
+
+.cursor{
+display:inline-block;
+width:3px;
+background:#ff1493;
+animation:blink .8s infinite;
+}
+
+@keyframes blink{
+50%{opacity:0;}
 }
 </style>
-
 </head>
 
 <body>
 
-<canvas id="c"></canvas>
+<button onclick="openLetter()">💗 BẤM VÀO ĐÂY BÉ ƠI 💗</button>
 
-<div class="center">
+<div id="letter">
 
-<h1 id="title">
-HAPPY<br>BIRTHDAY
-</h1>
+<h1>🎂 Happy Birthday Bé Yêu ❤️</h1>
 
-<button onclick="start()">
-💗 BẤM VÀO ĐÂY BÉ ƠI 💗
+<div id="text"></div>
+
+<button class="close" onclick="document.getElementById('letter').style.display='none'">
+Đóng ❤️
 </button>
 
 </div>
 
 <script>
 
-const canvas=document.getElementById("c");
-const ctx=canvas.getContext("2d");
+const message=`Gửi bé yêu của anh ❤️
 
-canvas.width=innerWidth;
-canvas.height=innerHeight;
+Chúc cục dàng iuuu dấu của chồng 1 năm sinh nhật thật là vui vẻ nè.
 
-const letters="ANHYEUEM💗";
+Chồng mong là chúng ta sau này và mãi về sau nữa sẽ ở bên nhau thật lâu luôn nè.
 
-const size=18;
+Chúc cho cục kim cương iuuu dấu của chồng có một buổi sinh nhật thật vui vẻ và hạnh phúc.
 
-const cols=Math.floor(canvas.width/size);
+Đặc biệt năm nay có chồng nè.
 
-const drops=[];
+Chồng không biết mấy năm trước heo có đón sinh nhật với người yêu chưa, nhưng chồng sẽ khác với những người trước kia của heo.
 
-for(let i=0;i<cols;i++)drops[i]=1;
+Chồng hy vọng chồng không phải là người đầu tiên, nhưng sẽ là người cuối cùng của em.
 
-function draw(){
+Anh yêu em rất nhiều ❤️`;
 
-ctx.fillStyle="rgba(0,0,0,.08)";
-ctx.fillRect(0,0,canvas.width,canvas.height);
+❤️ Happy Birthday ❤️`;
 
-ctx.fillStyle="#ff1493";
-ctx.font=size+"px monospace";
+function openLetter(){
 
-for(let i=0;i<drops.length;i++){
+document.getElementById("letter").style.display="block";
 
-const text=letters[Math.floor(Math.random()*letters.length)];
+const text=document.getElementById("text");
 
-ctx.fillText(text,i*size,drops[i]*size);
+text.innerHTML="";
 
-if(drops[i]*size>canvas.height&&Math.random()>0.97)drops[i]=0;
+let i=0;
 
-drops[i]++;
+function type(){
+
+if(i<message.length){
+
+text.innerHTML+=message.charAt(i);
+
+i++;
+
+setTimeout(type,40);
+
+}else{
+
+text.innerHTML+='<span class="cursor"></span>';
 
 }
 
 }
 
-setInterval(draw,35);
-
-function start(){
-
-document.querySelector("button").style.display="none";
-
-document.getElementById("title").style.display="block";
+type();
 
 }
 
