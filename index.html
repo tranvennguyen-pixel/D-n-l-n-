@@ -3,51 +3,41 @@
 <head>
     <meta charset="UTF-8">
     <title>Happy Birthday Cục Dàng</title>
-    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.5.1/dist/confetti.browser.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
     <style>
-        body { margin: 0; background: black; color: white; font-family: 'Arial', sans-serif; text-align: center; overflow-x: hidden; }
+        body { margin: 0; background: #000; color: #fff; font-family: sans-serif; text-align: center; }
         #intro { height: 100vh; display: flex; flex-direction: column; justify-content: center; align-items: center; }
-        canvas { position: absolute; top: 0; left: 0; z-index: -1; }
-        button { padding: 25px 50px; font-size: 25px; cursor: pointer; border-radius: 50px; border: none; background: #ff4d6d; color: white; font-weight: bold; box-shadow: 0 0 20px #ff4d6d; }
-        #main-content { display: none; padding: 20px; }
-        #message { font-size: 20px; color: #ffdee9; margin: 30px auto; line-height: 1.6; max-width: 800px; font-weight: bold; }
-        .album-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 15px; margin-top: 30px; }
+        button { padding: 25px 50px; font-size: 25px; border-radius: 50px; border: none; background: #ff4d6d; color: white; cursor: pointer; font-weight: bold; }
+        #main-content { display: none; padding: 40px 20px; }
+        #message { font-size: 20px; color: #ffdee9; margin: 30px auto; max-width: 800px; line-height: 1.8; border: 2px solid #ff4d6d; padding: 20px; border-radius: 20px; background: rgba(255,77,109,0.1); }
+        .album-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 15px; margin-top: 30px; }
         img { width: 100%; border-radius: 15px; border: 3px solid #ff4d6d; }
     </style>
 </head>
 <body>
 
 <div id="intro">
-    <canvas id="matrix"></canvas>
-    <h1 style="color: #ff4d6d; font-size: 50px;">BIRTHDAY</h1>
-    <button onclick="startExperience()">BẤM VÀO ĐÂY BÉ ƠI</button>
+    <h1 style="color: #ff4d6d; font-size: 50px;">HAPPY BIRTHDAY</h1>
+    <button onclick="start()">BẤM ĐỂ MỞ QUÀ</button>
 </div>
 
 <div id="main-content">
-    <h1 style="color: #ff4d6d;">HAPPY BIRTHDAY</h1>
+    <h1 style="color: #ff4d6d;">Gửi Cục Dàng Iuuu Dấu</h1>
     <div id="message"></div>
     <div class="album-grid">
-        <img src="Ảnh1.jpeg"> <img src="Ảnh2.jpeg"> <img src="Ảnh3.jpeg"> 
-        <img src="Ảnh4.jpeg"> <img src="Ảnh5.jpeg"> <img src="Ảnh6.jpeg"> <img src="Ảnh7.jpeg">
+        <img src="Ảnh1.jpeg"><img src="Ảnh2.jpeg"><img src="Ảnh3.jpeg"><img src="Ảnh4.jpeg">
+        <img src="Ảnh5.jpeg"><img src="Ảnh6.jpeg"><img src="Ảnh7.jpeg">
     </div>
 </div>
 
-<script>
-    const canvas = document.getElementById('matrix');
-    const ctx = canvas.getContext('2d');
-    canvas.width = window.innerWidth; canvas.height = window.innerHeight;
-    const drops = Array(Math.floor(canvas.width/50)).fill(1);
-    function draw() {
-        ctx.fillStyle = 'rgba(0, 0, 0, 0.05)'; ctx.fillRect(0, 0, canvas.width, canvas.height);
-        ctx.fillStyle = '#ff4d6d';
-        drops.map((y, i) => { ctx.fillText("Anh yêu em 💗", i * 100, y * 20); drops[i] = y > canvas.height/20 ? 0 : y + 1; });
-    }
-    setInterval(draw, 50);
+<audio id="myAudio" loop><source src="Phaohoa.mp3" type="audio/mpeg"></audio>
 
-    function startExperience() {
+<script>
+    function start() {
+        document.getElementById('myAudio').play();
         document.getElementById('intro').style.display = 'none';
         document.getElementById('main-content').style.display = 'block';
-        confetti({ particleCount: 200, spread: 100, origin: { y: 0.6 } });
+        confetti({ particleCount: 300, spread: 200, origin: { y: 0.6 } });
         
         const content = "Chúc cục dàng iuuu dấu của chồng 1 năm sinh nhật thật là vui vẻ nè chồng mong là chúc ta sau này và mãi về sau nữa sẽ ở bên nhau thật lâu luôn nè chúc cho cục kim cương iuuu dấu của chồng buổi sinh nhật vui vẻ và hạnh phúc đặc biệt năm nay có chồng nè chồng hong bt là mấy năm trước heo có đón sinh nhật v ng iu chx mà chồng thì sẽ khảc v mấy người trc kia của heo chồng hy vọng chồng hong phải là người đầu nhưng mà hy vọng chồng sẽ là người heo cảm thấy hạnh phúc và an toàn vui vẻ khi ở bên và hy vọng chồng sẽ là người cuối cùng của em ạ anhh yeeuuu emmm💗";
         let i = 0;
@@ -55,7 +45,7 @@
             if (i < content.length) {
                 document.getElementById("message").innerHTML += content.charAt(i);
                 i++;
-                setTimeout(typing, 80);
+                setTimeout(typing, 60);
             }
         }
         typing();
