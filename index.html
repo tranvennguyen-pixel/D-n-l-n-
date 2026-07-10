@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>Happy Birthday ❤️</title>
+
+<style>
+*{margin:0;padding:0;box-sizing:border-box;}
+body{
+background:#000;
+height:100vh;
+display:flex;
+justify-content:center;
+align-items:center;
+overflow:hidden;
+font-family:Arial,sans-serif;
+color:#fff;
+}
+
+canvas{
+position:fixed;
+top:0;
+left:0;
+width:100%;
+height:100%;
+z-index:0;
+}
+
+.center{
+position:relative;
+z-index:2;
+text-align:center;
+}
+
+button{
+padding:25px 60px;
+font-size:30px;
+border:none;
+border-radius:20px;
+background:#ff1493;
+color:white;
+box-shadow:0 0 30px #ff1493;
+animation:pulse 1s infinite;
+cursor:pointer;
+}
+
+@keyframes pulse{
+50%{transform:scale(1.08);}
+}
+
+h1{
+display:none;
+font-size:70px;
+color:#ff4fa3;
+text-shadow:0 0 25px #ff4fa3;
+margin-bottom:30px;
+}
+</style>
+
+</head>
+
+<body>
+
+<canvas id="c"></canvas>
+
+<div class="center">
+
+<h1 id="title">
+HAPPY<br>BIRTHDAY
+</h1>
+
+<button onclick="start()">
+💗 BẤM VÀO ĐÂY BÉ ƠI 💗
+</button>
+
+</div>
+
+<script>
+
+const canvas=document.getElementById("c");
+const ctx=canvas.getContext("2d");
+
+canvas.width=innerWidth;
+canvas.height=innerHeight;
+
+const letters="ANHYEUEM💗";
+
+const size=18;
+
+const cols=Math.floor(canvas.width/size);
+
+const drops=[];
+
+for(let i=0;i<cols;i++)drops[i]=1;
+
+function draw(){
+
+ctx.fillStyle="rgba(0,0,0,.08)";
+ctx.fillRect(0,0,canvas.width,canvas.height);
+
+ctx.fillStyle="#ff1493";
+ctx.font=size+"px monospace";
+
+for(let i=0;i<drops.length;i++){
+
+const text=letters[Math.floor(Math.random()*letters.length)];
+
+ctx.fillText(text,i*size,drops[i]*size);
+
+if(drops[i]*size>canvas.height&&Math.random()>0.97)drops[i]=0;
+
+drops[i]++;
+
+}
+
+}
+
+setInterval(draw,35);
+
+function start(){
+
+document.querySelector("button").style.display="none";
+
+document.getElementById("title").style.display="block";
+
+}
+
+</script>
+
+</body>
+</html>
