@@ -5,50 +5,114 @@
     <title>Happy Birthday Cục Dàng</title>
     <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
     <style>
-        body { margin: 0; background: #000; color: #fff; font-family: sans-serif; text-align: center; }
+        body { margin: 0; background: #000; color: #fff; font-family: 'Arial', sans-serif; text-align: center; overflow-x: hidden; }
+        
+        /* Màn hình chờ */
         #intro { height: 100vh; display: flex; flex-direction: column; justify-content: center; align-items: center; }
-        button { padding: 25px 50px; font-size: 25px; border-radius: 50px; border: none; background: #ff4d6d; color: white; cursor: pointer; font-weight: bold; }
+        button { padding: 20px 40px; font-size: 22px; border-radius: 50px; border: none; background: linear-gradient(45deg, #ff4d6d, #ff758c); color: white; cursor: pointer; font-weight: bold; box-shadow: 0 0 20px rgba(255, 77, 109, 0.5); animation: pulse 1.5s infinite; }
+        @keyframes pulse { 0% { transform: scale(1); } 50% { transform: scale(1.05); } 100% { transform: scale(1); } }
+        
+        /* Nội dung chính */
         #main-content { display: none; padding: 40px 20px; }
-        #message { font-size: 20px; color: #ffdee9; margin: 30px auto; max-width: 800px; line-height: 1.8; border: 2px solid #ff4d6d; padding: 20px; border-radius: 20px; background: rgba(255,77,109,0.1); }
-        .album-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 15px; margin-top: 30px; }
-        img { width: 100%; border-radius: 15px; border: 3px solid #ff4d6d; }
+        
+        /* Bánh kem & Chữ xoay */
+        .cake-container { position: relative; width: 300px; height: 300px; margin: 0 auto 20px; display: flex; justify-content: center; align-items: center; }
+        .cake-gif { width: 120px; border-radius: 50%; z-index: 10; box-shadow: 0 0 30px #ff4d6d; }
+        .orbit { position: absolute; width: 100%; height: 100%; animation: spin 8s linear infinite; }
+        .orbit-text { position: absolute; top: 50%; left: 50%; font-size: 20px; font-weight: bold; color: #ffdee9; text-shadow: 0 0 10px #ff4d6d; white-space: nowrap; }
+        
+        /* Tọa độ 3 chữ xoay xung quanh bánh */
+        .text-1 { transform: translate(-50%, -50%) rotate(0deg) translateY(-130px) rotate(0deg); }
+        .text-2 { transform: translate(-50%, -50%) rotate(120deg) translateY(-130px) rotate(-120deg); }
+        .text-3 { transform: translate(-50%, -50%) rotate(240deg) translateY(-130px) rotate(-240deg); }
+        @keyframes spin { 100% { transform: rotate(360deg); } }
+
+        /* Bức thư */
+        .letter-container { position: relative; max-width: 800px; margin: 30px auto; z-index: 5; }
+        #message { font-size: 20px; color: #fff; line-height: 1.8; border: 2px solid #ff4d6d; padding: 30px; border-radius: 20px; background: rgba(255,77,109,0.15); box-shadow: 0 0 15px rgba(255,77,109,0.3); text-align: left; }
+        
+        /* Lưới 7 Ảnh */
+        .album-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 15px; margin-top: 40px; }
+        img.album-img { width: 100%; height: 200px; object-fit: cover; border-radius: 15px; border: 3px solid #ff4d6d; transition: 0.3s; box-shadow: 0 5px 15px rgba(0,0,0,0.5); }
+        img.album-img:hover { transform: scale(1.05) rotate(2deg); border-color: #ffdee9; }
     </style>
 </head>
 <body>
 
 <div id="intro">
-    <h1 style="color: #ff4d6d; font-size: 50px;">HAPPY BIRTHDAY</h1>
-    <button onclick="start()">BẤM ĐỂ MỞ QUÀ</button>
+    <h1 style="color: #ff4d6d; font-size: 40px; text-shadow: 0 0 10px #ff4d6d;">MÓN QUÀ BÍ MẬT</h1>
+    <button onclick="start()">BẤM VÀO ĐÂY BÉ ƠI</button>
 </div>
 
 <div id="main-content">
-    <h1 style="color: #ff4d6d;">Gửi Cục Dàng Iuuu Dấu</h1>
-    <div id="message"></div>
+    
+    <div class="cake-container">
+        <img class="cake-gif" src="https://i.giphy.com/media/v1.Y2lkPTc5MGI3NjExNHJ4ZzJ5eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4JmVwPXYxX2ludGVybmFsX2dpZl9ieV9pZCZjdD1n/l41lTjJp8Zz0y5z6G/giphy.gif" alt="Bánh kem">
+        <div class="orbit">
+            <div class="orbit-text text-1">Happy Birthday</div>
+            <div class="orbit-text text-2">Anh Yêu Em</div>
+            <div class="orbit-text text-3">Anh Nhớ Em</div>
+        </div>
+    </div>
+
+    <div class="letter-container">
+        <h2 style="color: #ff4d6d; text-align: center; margin-bottom: 20px;">Gửi Cục Dàng Iuuu Dấu 💗</h2>
+        <div id="message"></div>
+    </div>
+
     <div class="album-grid">
-        <img src="Ảnh1.jpeg"><img src="Ảnh2.jpeg"><img src="Ảnh3.jpeg"><img src="Ảnh4.jpeg">
-        <img src="Ảnh5.jpeg"><img src="Ảnh6.jpeg"><img src="Ảnh7.jpeg">
+        <img class="album-img" src="Ảnh1.jpeg" alt="Ảnh 1">
+        <img class="album-img" src="Ảnh2.jpeg" alt="Ảnh 2">
+        <img class="album-img" src="Ảnh3.jpeg" alt="Ảnh 3">
+        <img class="album-img" src="Ảnh4.jpeg" alt="Ảnh 4">
+        <img class="album-img" src="Ảnh5.jpeg" alt="Ảnh 5">
+        <img class="album-img" src="Ảnh6.jpeg" alt="Ảnh 6">
+        <img class="album-img" src="Ảnh7.jpeg" alt="Ảnh 7">
     </div>
 </div>
 
-<audio id="myAudio" loop><source src="Phaohoa.mp3" type="audio/mpeg"></audio>
+<audio id="myAudio" loop>
+    <source src="Phaohoa.mp3" type="audio/mpeg">
+</audio>
 
 <script>
+    // Hàm tạo pháo hoa liên tục
+    function fireConfetti() {
+        var duration = 15 * 1000;
+        var animationEnd = Date.now() + duration;
+        var defaults = { startVelocity: 30, spread: 360, ticks: 60, zIndex: 0 };
+        function randomInRange(min, max) { return Math.random() * (max - min) + min; }
+        var interval = setInterval(function() {
+            var timeLeft = animationEnd - Date.now();
+            if (timeLeft <= 0) { return clearInterval(interval); }
+            var particleCount = 50 * (timeLeft / duration);
+            confetti(Object.assign({}, defaults, { particleCount, origin: { x: randomInRange(0.1, 0.3), y: Math.random() - 0.2 } }));
+            confetti(Object.assign({}, defaults, { particleCount, origin: { x: randomInRange(0.7, 0.9), y: Math.random() - 0.2 } }));
+        }, 250);
+    }
+
     function start() {
+        // Bật nhạc
         document.getElementById('myAudio').play();
+        
+        // Chuyển màn hình
         document.getElementById('intro').style.display = 'none';
         document.getElementById('main-content').style.display = 'block';
-        confetti({ particleCount: 300, spread: 200, origin: { y: 0.6 } });
         
-        const content = "Chúc cục dàng iuuu dấu của chồng 1 năm sinh nhật thật là vui vẻ nè chồng mong là chúc ta sau này và mãi về sau nữa sẽ ở bên nhau thật lâu luôn nè chúc cho cục kim cương iuuu dấu của chồng buổi sinh nhật vui vẻ và hạnh phúc đặc biệt năm nay có chồng nè chồng hong bt là mấy năm trước heo có đón sinh nhật v ng iu chx mà chồng thì sẽ khảc v mấy người trc kia của heo chồng hy vọng chồng hong phải là người đầu nhưng mà hy vọng chồng sẽ là người heo cảm thấy hạnh phúc và an toàn vui vẻ khi ở bên và hy vọng chồng sẽ là người cuối cùng của em ạ anhh yeeuuu emmm💗";
+        // Bắn pháo hoa
+        fireConfetti();
+        
+        // Chữ tự chạy
+        const content = "Chúc cục dàng iuuu dấu của chồng 1 năm sinh nhật thật là vui vẻ nè. Chồng mong là chúng ta sau này và mãi về sau nữa sẽ ở bên nhau thật lâu luôn nè. Chúc cho cục kim cương iuuu dấu của chồng buổi sinh nhật vui vẻ và hạnh phúc đặc biệt năm nay có chồng nè. Chồng hong bt là mấy năm trước heo có đón sinh nhật v ng iu chx mà chồng thì sẽ khác v mấy người trc kia của heo. Chồng hy vọng chồng hong phải là người đầu nhưng mà hy vọng chồng sẽ là người heo cảm thấy hạnh phúc và an toàn vui vẻ khi ở bên và hy vọng chồng sẽ là người cuối cùng của em ạ. Anh yêeeuuu emmm 💗";
         let i = 0;
         function typing() {
             if (i < content.length) {
                 document.getElementById("message").innerHTML += content.charAt(i);
                 i++;
-                setTimeout(typing, 60);
+                setTimeout(typing, 50); // Tốc độ gõ chữ (50ms/chữ)
             }
         }
-        typing();
+        setTimeout(typing, 1000); // Đợi 1 giây rồi mới bắt đầu gõ thư
     }
 </script>
 </body>
