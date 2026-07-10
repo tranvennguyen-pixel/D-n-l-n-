@@ -10,7 +10,7 @@
         canvas { position: absolute; top: 0; left: 0; z-index: -1; }
         button { padding: 25px 50px; font-size: 25px; cursor: pointer; border-radius: 50px; border: none; background: #ff4d6d; color: white; font-weight: bold; box-shadow: 0 0 20px #ff4d6d; }
         #main-content { display: none; padding: 20px; }
-        #message { font-size: 22px; color: #ffdee9; margin: 30px auto; line-height: 1.6; max-width: 800px; font-weight: bold; }
+        #message { font-size: 20px; color: #ffdee9; margin: 30px auto; line-height: 1.6; max-width: 800px; font-weight: bold; }
         .album-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 15px; margin-top: 30px; }
         img { width: 100%; border-radius: 15px; border: 3px solid #ff4d6d; }
     </style>
@@ -27,11 +27,10 @@
     <h1 style="color: #ff4d6d;">HAPPY BIRTHDAY</h1>
     <div id="message"></div>
     <div class="album-grid">
-        <img src="anh1.jpg"> <img src="anh2.jpg"> <img src="anh3.jpg"> <img src="anh4.jpg"> <img src="anh5.jpg">
+        <img src="Ảnh1.jpeg"> <img src="Ảnh2.jpeg"> <img src="Ảnh3.jpeg"> 
+        <img src="Ảnh4.jpeg"> <img src="Ảnh5.jpeg"> <img src="Ảnh6.jpeg"> <img src="Ảnh7.jpeg">
     </div>
 </div>
-
-<audio id="music" loop><source src="nhac.mp3" type="audio/mpeg"></audio>
 
 <script>
     const canvas = document.getElementById('matrix');
@@ -48,7 +47,6 @@
     function startExperience() {
         document.getElementById('intro').style.display = 'none';
         document.getElementById('main-content').style.display = 'block';
-        document.getElementById('music').play();
         confetti({ particleCount: 200, spread: 100, origin: { y: 0.6 } });
         
         const content = "Chúc cục dàng iuuu dấu của chồng 1 năm sinh nhật thật là vui vẻ nè chồng mong là chúc ta sau này và mãi về sau nữa sẽ ở bên nhau thật lâu luôn nè chúc cho cục kim cương iuuu dấu của chồng buổi sinh nhật vui vẻ và hạnh phúc đặc biệt năm nay có chồng nè chồng hong bt là mấy năm trước heo có đón sinh nhật v ng iu chx mà chồng thì sẽ khảc v mấy người trc kia của heo chồng hy vọng chồng hong phải là người đầu nhưng mà hy vọng chồng sẽ là người heo cảm thấy hạnh phúc và an toàn vui vẻ khi ở bên và hy vọng chồng sẽ là người cuối cùng của em ạ anhh yeeuuu emmm💗";
