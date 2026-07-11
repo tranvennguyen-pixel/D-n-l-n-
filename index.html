@@ -38,7 +38,7 @@
         #open-letter { display: none; background: rgba(255, 255, 255, 0.85); border: 3px solid #ff4d6d; border-radius: 20px; padding: 30px; max-width: 90%; width: 600px; position: relative; box-shadow: 0 15px 40px rgba(255, 77, 109, 0.4); z-index: 10; animation: fadeIn 1s; backdrop-filter: blur(5px); }
         .heart-center { font-size: 55px; color: #ff4d6d; margin-bottom: 15px; animation: beat 1s infinite; }
         @keyframes beat { 0%, 100% { transform: scale(1); } 50% { transform: scale(1.2); } }
-        #message-text { font-size: 22px; line-height: 1.6; text-align: left; min-height: 150px; color: #333; font-weight: 500; }
+        #message-text { font-size: 20px; line-height: 1.6; text-align: left; min-height: 150px; color: #333; font-weight: 500; }
         
         .flower-corner { position: absolute; bottom: -30px; right: -30px; width: 120px; z-index: 20; transform: rotate(-10deg); filter: drop-shadow(0 5px 10px rgba(0,0,0,0.2)); animation: sway 3s ease-in-out infinite; }
         @keyframes sway { 0%, 100% { transform: rotate(-10deg); } 50% { transform: rotate(-5deg); } }
@@ -46,16 +46,22 @@
         .floating-heart { position: absolute; color: #ff4d6d; font-size: 30px; animation: floatHeart 2.5s ease-out infinite; opacity: 0; z-index: 1; }
         @keyframes floatHeart { 0% { transform: translateY(0) scale(1) rotate(0deg); opacity: 1; } 100% { transform: translateY(-200px) scale(1.5) rotate(45deg); opacity: 0; } }
 
+        /* ĐỒNG HỒ TÌNH YÊU */
+        .counter-container { display: flex; justify-content: center; gap: 15px; margin-bottom: 20px; z-index: 10; position: relative; }
+        .counter-box { background: rgba(255, 255, 255, 0.95); border: 3px solid #ff4d6d; border-radius: 15px; padding: 10px; width: 70px; box-shadow: 0 8px 20px rgba(255,77,109,0.3); display: flex; flex-direction: column; align-items: center; }
+        .counter-number { font-size: 28px; font-weight: bold; color: #ff4d6d; }
+        .counter-label { font-size: 14px; color: #555; font-weight: bold; margin-top: 5px; }
+
         .book-container { width: 90%; max-width: 450px; margin: 0 auto; position: relative; z-index: 10; perspective: 1200px; }
-        .book-page { width: 100%; height: 450px; object-fit: cover; border-radius: 15px; border: 8px solid #fff; box-shadow: 0 15px 40px rgba(0,0,0,0.3); display: none; background: #fff; }
+        .book-page { width: 100%; height: 400px; object-fit: cover; border-radius: 15px; border: 8px solid #fff; box-shadow: 0 15px 40px rgba(0,0,0,0.3); display: none; background: #fff; }
         .active-page { display: block; animation: flipPage 0.8s ease-out forwards; transform-origin: left center; }
         @keyframes flipPage { 0% { transform: rotateY(-90deg); opacity: 0; } 100% { transform: rotateY(0deg); opacity: 1; } }
         
-        .page-controls { margin-top: 25px; display: flex; justify-content: center; align-items: center; gap: 20px; z-index: 20; position: relative; }
-        .btn-page { padding: 12px 25px; background: #fff; color: #ff4d6d; border: 3px solid #ff4d6d; border-radius: 30px; cursor: pointer; font-weight: bold; font-size: 18px; transition: 0.3s; box-shadow: 0 5px 15px rgba(255,77,109,0.3); }
+        .page-controls { margin-top: 20px; display: flex; justify-content: center; align-items: center; gap: 20px; z-index: 20; position: relative; }
+        .btn-page { padding: 10px 20px; background: #fff; color: #ff4d6d; border: 3px solid #ff4d6d; border-radius: 30px; cursor: pointer; font-weight: bold; font-size: 18px; transition: 0.3s; box-shadow: 0 5px 15px rgba(255,77,109,0.3); }
         .btn-page:hover { background: #ff4d6d; color: #fff; }
 
-        #btn-go-qr { display: none; background: linear-gradient(45deg, #ff007f, #ff758c); color: white; font-size: 24px; padding: 15px 40px; margin-top: 20px; border-radius: 50px; animation: shake 0.5s infinite; }
+        #btn-go-qr { display: none; background: linear-gradient(45deg, #ff007f, #ff758c); color: white; font-size: 22px; padding: 15px 35px; margin-top: 15px; border-radius: 50px; animation: shake 0.5s infinite; }
         @keyframes shake { 0%, 100% { transform: translateX(0); } 25% { transform: translateX(-5px); } 75% { transform: translateX(5px); } }
 
         .qr-card { background: rgba(255, 255, 255, 0.9); border-radius: 25px; padding: 35px; box-shadow: 0 20px 50px rgba(255, 20, 147, 0.3); border: 4px dashed #ff4d6d; max-width: 90%; width: 400px; z-index: 10; animation: fadeIn 1.2s ease-in-out; }
@@ -106,15 +112,35 @@
 
     <div id="phase4" class="phase">
         <div id="balloons-p4"></div>
-        <h1 style="color: #ff4d6d; text-shadow: 2px 2px 0px #fff, 0 0 20px #ff4d6d; margin-bottom: 30px; z-index: 10; position: relative; font-size: 35px;">💖 KỶ NIỆM CỦA CHÚNG MÌNH 💖</h1>
         
+        <h1 style="color: #ff4d6d; text-shadow: 2px 2px 0px #fff, 0 0 15px #fff; margin-bottom: 10px; z-index: 10; position: relative; font-size: 26px;">💖 THỜI GIAN MÌNH BÊN NHAU 💖</h1>
+        
+        <div class="counter-container">
+            <div class="counter-box">
+                <span id="love-days" class="counter-number">00</span>
+                <span class="counter-label">Ngày</span>
+            </div>
+            <div class="counter-box">
+                <span id="love-hours" class="counter-number">00</span>
+                <span class="counter-label">Giờ</span>
+            </div>
+            <div class="counter-box">
+                <span id="love-mins" class="counter-number">00</span>
+                <span class="counter-label">Phút</span>
+            </div>
+            <div class="counter-box">
+                <span id="love-secs" class="counter-number">00</span>
+                <span class="counter-label">Giây</span>
+            </div>
+        </div>
+
         <div class="book-container">
             <img id="book-img" class="book-page active-page" src="Ảnh1.jpeg">
         </div>
         
         <div class="page-controls">
             <button class="btn-page" onclick="prevPage()">⬅ Lật Về</button>
-            <span id="page-counter" style="line-height: 40px; font-weight: bold; font-size: 20px; color: #ff4d6d; background: #fff; padding: 0 15px; border-radius: 20px; border: 2px solid #ff4d6d;">1 / 7</span>
+            <span id="page-counter" style="line-height: 40px; font-weight: bold; font-size: 20px; color: #ff4d6d; background: #fff; padding: 0 15px; border-radius: 20px; border: 2px solid #ff4d6d;">1 / 12</span>
             <button class="btn-page" onclick="nextPage()">Lật Tới ➡</button>
         </div>
 
@@ -124,20 +150,20 @@
     <div id="phase5" class="phase">
         <div id="balloons-p5"></div>
         <div class="qr-card">
-            <div class="qr-instruction">✨ Quét mã này bằng Google Chrome để nhận điều bí mật tiếp theo nha bé yêu! ✨</div>
+            <div class="qr-instruction">✨ Quét mã này bằng Zalo hoặc Camera để nhận điều bí mật tiếp theo nha bé yêu! ✨</div>
             <img class="qr-image" src="AnhmaQR.png" alt="Mã QR Bí Mật">
         </div>
     </div>
 
     <script>
-        // HÀM PHÁT ÂM THANH AN TOÀN (CHỐNG LỖI TRÌNH DUYỆT)
+        // HÀM PHÁT ÂM THANH AN TOÀN
         function playSafe(id) {
             try {
                 let el = document.getElementById(id);
                 if(el) {
                     let promise = el.play();
                     if (promise !== undefined) {
-                        promise.catch(error => console.log("Âm thanh bị chặn nhẹ:", error));
+                        promise.catch(error => console.log("Âm thanh bị chặn:", error));
                     }
                 }
             } catch(e) {}
@@ -196,6 +222,27 @@
             } catch(e) {}
         }
 
+        // HÀM CHẠY ĐỒNG HỒ TÌNH YÊU
+        function startLoveCounter() {
+            // Ngày bắt đầu yêu: Cách ngày hiện tại 54 ngày (18/05/2026)
+            const startDate = new Date("2026-05-18T00:00:00").getTime();
+            
+            setInterval(function() {
+                const now = new Date().getTime();
+                const distance = now - startDate;
+                
+                const days = Math.floor(distance / (1000 * 60 * 60 * 24));
+                const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+                const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+                const seconds = Math.floor((distance % (1000 * 60)) / 1000);
+                
+                document.getElementById("love-days").innerText = days;
+                document.getElementById("love-hours").innerText = hours.toString().padStart(2, '0');
+                document.getElementById("love-mins").innerText = minutes.toString().padStart(2, '0');
+                document.getElementById("love-secs").innerText = seconds.toString().padStart(2, '0');
+            }, 1000);
+        }
+
         function goToPhase2() {
             document.getElementById('phase1').style.display = 'none';
             document.getElementById('phase2').style.display = 'flex';
@@ -223,3 +270,106 @@
                 heart.className = 'floating-heart';
                 heart.innerText = '❤';
                 heart.style.left = (Math.random() * 90) + '%';
+                heart.style.bottom = '20px';
+                document.getElementById('open-letter').appendChild(heart);
+                setTimeout(() => heart.remove(), 2500);
+            }, 300);
+
+            const content = "Chúc cục dàng iuuu dấu của chồng 1 năm sinh nhật thật là vui vẻ nè chồng mong là chúc ta sau này và mãi về sau nữa sẽ ở bên nhau thật lâu luôn nè chúc cho cục kim cương iuuu dấu của chồng buổi sinh nhật vui vẻ và hạnh phúc đặc biệt năm nay có chồng nè chồng hong bt là mấy năm trước heo có đón sinh nhật v ng iu chx mà chồng thì sẽ khác v mấy người trc kia của heo chồng hy vọng chồng hong phải là người đầu nhưng mà hy vọng chồng sẽ là người heo cảm thấy hạnh phúc và an toàn vui vẻ khi ở bên và hy vọng chồng sẽ là người cuối cùng của em ạ anhh yeeuuu emmm💗";
+            let i = 0;
+            function typing() {
+                if (i < content.length) {
+                    document.getElementById("message-text").innerHTML += content.charAt(i);
+                    i++;
+                    setTimeout(typing, 50);
+                } else {
+                    document.getElementById('btn-next-p4').style.display = 'block';
+                }
+            }
+            setTimeout(typing, 600);
+        }
+
+        function goToPhase4() {
+            document.getElementById('phase3').style.display = 'none';
+            document.getElementById('phase4').style.display = 'flex';
+            
+            stopAllAudio();
+            playSafe('sound-chucmung');
+            setTimeout(() => {
+                try { document.getElementById('sound-votay').currentTime = 0; } catch(e) {}
+                playSafe('sound-votay');
+            }, 2000);
+
+            createBalloons('balloons-p4', 25);
+            try {
+                if (typeof confetti !== 'undefined') {
+                    confetti({ particleCount: 250, spread: 180, origin: { y: 0.1 }, colors: ['#ff4d6d', '#fff', '#ffd700'] });
+                }
+            } catch(e) {}
+
+            // Kích hoạt đồng hồ khi vào giai đoạn 4
+            startLoveCounter();
+        }
+
+        // TỔNG CỘNG CÓ 12 TRANG
+        let currentPage = 1;
+        const totalPages = 12;
+        
+        function updatePage() {
+            const imgEl = document.getElementById('book-img');
+            imgEl.classList.remove('active-page');
+            void imgEl.offsetWidth; 
+            
+            // Xử lý logic tên ảnh khác nhau
+            if(currentPage <= 7) {
+                // Trang 1 đến 7: Ảnh1.jpeg -> Ảnh7.jpeg
+                imgEl.src = 'Ảnh' + currentPage + '.jpeg';
+            } else {
+                // Trang 8 đến 12: anhkiniem1.jpg -> anhkiniem5.jpg
+                let k = currentPage - 7;
+                imgEl.src = 'anhkiniem' + k + '.jpg';
+            }
+
+            imgEl.classList.add('active-page');
+            document.getElementById('page-counter').innerText = currentPage + ' / ' + totalPages;
+
+            // CHỈ hiện nút Quà khi tới trang cuối cùng (trang 12)
+            if (currentPage === totalPages) {
+                document.getElementById('btn-go-qr').style.display = 'inline-block';
+            } else {
+                document.getElementById('btn-go-qr').style.display = 'none';
+            }
+        }
+
+        function nextPage() {
+            if (currentPage < totalPages) {
+                currentPage++;
+                updatePage();
+            }
+        }
+
+        function prevPage() {
+            if (currentPage > 1) {
+                currentPage--;
+                updatePage();
+            }
+        }
+
+        function goToPhase5() {
+            document.getElementById('phase4').style.display = 'none';
+            document.getElementById('phase5').style.display = 'flex';
+            
+            try { document.getElementById('sound-votay').currentTime = 0; } catch(e) {}
+            playSafe('sound-votay');
+            
+            createBalloons('balloons-p5', 30);
+            
+            try {
+                if (typeof confetti !== 'undefined') {
+                    confetti({ particleCount: 150, spread: 80, origin: { y: 0.6 } });
+                }
+            } catch(e) {}
+        }
+    </script>
+</body>
+</html>
