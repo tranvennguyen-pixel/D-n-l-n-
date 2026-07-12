@@ -3,201 +3,266 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Happy Birthday Kỷ Niệm</title>
+    <title>Happy Birthday & Kỷ Niệm</title>
     <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
     <style>
-        body { margin: 0; padding: 0; background-color: #333; font-family: 'Arial', sans-serif; text-align: center; overflow: hidden; }
-        
+        body { margin: 0; padding: 0; background-color: #ffe6ea; font-family: 'Arial', sans-serif; text-align: center; overflow: hidden; }
         .phase { display: none; width: 100vw; height: 100vh; flex-direction: column; justify-content: center; align-items: center; position: relative; }
-        
-        /* Hình nền các giai đoạn */
+
+        /* Nền các trang */
         #phase1 { display: flex; background-image: url('Nengiaodiendau.png'); background-size: cover; background-position: center; }
-        #phase2 { background: radial-gradient(circle, #000000 0%, #1a1a1a 100%); overflow: hidden; }
-        #phase3 { background: linear-gradient(135deg, #fbc2eb 0%, #a18cd1 100%); }
+        #phase2 { background: radial-gradient(circle, #fff0f5 0%, #ffc0cb 100%); }
+        #phase3 { background: linear-gradient(135deg, #fbc2eb 0%, #a6c1ee 100%); }
         #phase4 { background: linear-gradient(135deg, #ff9a9e 0%, #fecfef 100%); }
         #phase5 { background: linear-gradient(135deg, #ffecd2 0%, #fcb69f 100%); }
+        #phase6 { background: linear-gradient(135deg, #0f2027 0%, #203a43 50%, #2c5364 100%); }
 
         /* Nút bấm chung */
-        .btn { padding: 15px 35px; font-size: 22px; border-radius: 50px; border: none; cursor: pointer; z-index: 10; font-weight: bold; box-shadow: 0 5px 15px rgba(0,0,0,0.3); transition: transform 0.2s; background: linear-gradient(45deg, #ff4d4d, #ff758c); color: white; }
-        .btn:hover { transform: scale(1.05); }
-        .btn-blue { background: #007bff; margin-top: 20px; }
-
-        /* Chữ rơi Phase 2 */
-        .falling-text { position: absolute; font-size: 22px; font-weight: bold; color: #ff4d4d; text-shadow: 0 0 10px rgba(255,255,255,0.8); animation: float3D linear infinite; z-index: 5; }
-        @keyframes float3D {
-            0% { transform: translateY(-10vh) rotate(0deg); opacity: 0; }
-            10% { opacity: 1; }
-            90% { opacity: 1; }
-            100% { transform: translateY(110vh) rotate(360deg); opacity: 0; }
-        }
-
-        /* Bánh kem Phase 2 */
-        .cake-container { z-index: 10; margin-bottom: 20px; }
-        #cake-img { width: 300px; max-width: 80vw; border-radius: 20px; box-shadow: 0 10px 30px rgba(255,105,180,0.5); animation: pulse 2s infinite; }
+        button { padding: 15px 35px; font-size: 20px; border-radius: 50px; border: none; cursor: pointer; z-index: 10; font-weight: bold; box-shadow: 0 5px 15px rgba(0,0,0,0.3); transition: 0.3s; color: white; }
+        button:hover { transform: scale(1.05); }
+        .btn-red { background: linear-gradient(45deg, #ff4d6d, #ff758c); animation: pulse 1.5s infinite; }
+        .btn-blue { background: linear-gradient(45deg, #007bff, #00d2ff); margin-top: 20px; }
+        .btn-green { background: linear-gradient(45deg, #28a745, #84fab0); margin-top: 20px; }
         @keyframes pulse { 0% { transform: scale(1); } 50% { transform: scale(1.05); } 100% { transform: scale(1); } }
 
-        /* Đếm ngược thời gian Phase 4 */
-        .timer-box { background: rgba(255, 255, 255, 0.9); padding: 15px; border-radius: 15px; margin-bottom: 20px; display: flex; gap: 10px; border: 2px solid #ff758c; box-shadow: 0 5px 15px rgba(0,0,0,0.1); z-index: 10;}
-        .time-item { display: flex; flex-direction: column; align-items: center; border: 1px solid #ff4d4d; padding: 10px; border-radius: 10px; min-width: 60px;}
-        .time-val { font-size: 24px; font-weight: bold; color: #ff4d4d; }
-        .time-label { font-size: 12px; color: #333; }
-        
-        /* Khung ảnh kỷ niệm Phase 4 */
-        .album-container { width: 90%; max-width: 350px; background: white; padding: 10px; border-radius: 15px; box-shadow: 0 10px 20px rgba(0,0,0,0.2); margin-bottom: 20px; z-index: 10;}
-        #album-img { width: 100%; height: auto; border-radius: 10px; aspect-ratio: 3/4; object-fit: cover; }
-        .controls { display: flex; justify-content: space-between; align-items: center; padding: 10px 0; }
-        .btn-page { padding: 8px 15px; background: #ff758c; border: none; border-radius: 20px; color: white; font-weight: bold; cursor: pointer; }
+        /* Phase 2: Chữ rơi & Bánh */
+        .falling-text { position: absolute; font-size: 22px; font-weight: bold; color: #ff4d6d; text-shadow: 0 0 10px rgba(255,255,255,0.8); animation: fall linear infinite; z-index: 5; opacity: 0.8; }
+        @keyframes fall { 0% { transform: translateY(-10vh); opacity: 0; } 10% { opacity: 1; } 90% { opacity: 1; } 100% { transform: translateY(100vh); opacity: 0; } }
+        .cake-img { width: 280px; max-width: 80vw; border-radius: 20px; filter: drop-shadow(0 20px 15px rgba(0,0,0,0.3)); animation: float3D 4s ease-in-out infinite; z-index: 10;}
+        @keyframes float3D { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-20px); } }
 
-        /* QR Phase 5 */
-        .qr-card { background: white; padding: 20px; border-radius: 20px; border: 3px dashed #ff4d4d; max-width: 80%; }
-        .qr-card p { font-size: 18px; font-weight: bold; color: #ff4d4d; margin-bottom: 15px; }
-        #qr-img { width: 200px; height: 200px; border-radius: 10px; }
-        
-        /* Hiệu ứng bong bóng nền */
-        .balloon { position: absolute; bottom: -100px; border-radius: 50%; opacity: 0.6; animation: floatUp linear infinite; z-index: 1; }
-        @keyframes floatUp { to { transform: translateY(-120vh) rotate(100deg); } }
+        /* Phase 3: Thư tình */
+        #envelope { cursor: pointer; animation: pulse 2s infinite; z-index: 10; }
+        .envelope-box { width: 280px; height: 200px; background: #ff758c; position: relative; border-radius: 10px; margin: 0 auto; box-shadow: 0 15px 35px rgba(0,0,0,0.2); }
+        .envelope-box::before { content: ''; position: absolute; top: 0; left: 0; border-left: 140px solid transparent; border-right: 140px solid transparent; border-top: 110px solid #ff4d6d; }
+        .env-text { position: absolute; top: 120px; width: 100%; font-weight: bold; font-size: 24px; color: white; z-index: 3; }
+        #open-letter { display: none; background: rgba(255,255,255,0.9); border: 3px solid #ff4d6d; border-radius: 20px; padding: 30px; width: 85%; max-width: 500px; position: relative; box-shadow: 0 15px 40px rgba(255,77,109,0.4); z-index: 10; }
+        .flower-corner { position: absolute; bottom: -20px; right: -20px; width: 100px; transform: rotate(-10deg); }
+        .heart-float { position: absolute; color: #ff4d6d; font-size: 30px; animation: floatHeart 2.5s ease-out forwards; z-index: 11; }
+        @keyframes floatHeart { 0% { transform: translateY(0) scale(1); opacity: 1; } 100% { transform: translateY(-200px) scale(1.5); opacity: 0; } }
+
+        /* Phase 4: Đếm thời gian & Album */
+        .timer-container { display: flex; justify-content: center; gap: 10px; margin-bottom: 20px; z-index: 10; }
+        .time-box { background: rgba(255,255,255,0.9); border: 2px solid #ff4d6d; border-radius: 10px; padding: 10px; min-width: 60px; box-shadow: 0 5px 15px rgba(255,77,109,0.3); }
+        .time-num { font-size: 24px; font-weight: bold; color: #ff4d6d; display: block; }
+        .time-text { font-size: 14px; color: #555; font-weight: bold; }
+        .album-box { width: 90%; max-width: 350px; background: white; padding: 10px; border-radius: 15px; box-shadow: 0 10px 20px rgba(0,0,0,0.2); z-index: 10; margin-bottom: 15px; }
+        #album-img { width: 100%; height: auto; aspect-ratio: 3/4; object-fit: cover; border-radius: 10px; }
+        .controls { display: flex; justify-content: space-between; align-items: center; margin-top: 10px; }
+        .btn-page { padding: 8px 15px; font-size: 16px; background: #ff758c; border-radius: 20px; box-shadow: none; animation: none; }
+
+        /* Phase 5 & 6 */
+        .qr-card { background: white; padding: 25px; border-radius: 20px; border: 3px dashed #ff4d6d; width: 85%; max-width: 400px; z-index: 10; }
+        #qr-img { width: 220px; height: 220px; border-radius: 10px; margin-bottom: 15px; }
+        .galaxy-card { background: rgba(255,255,255,0.1); padding: 30px; border-radius: 20px; border: 2px solid #fff; backdrop-filter: blur(10px); color: white; z-index: 10; text-align: center; }
     </style>
 </head>
 <body>
 
-    <audio id="sound-chucmung" src="Tiengchucmungsinhnhat.mp3"></audio>
     <audio id="sound-phaohoa" src="Phaohoa.mp3" loop></audio>
     <audio id="sound-votay" src="Votay.mp3"></audio>
+    <audio id="sound-chucmung" src="Tiengchucmungsinhnhat.mp3"></audio>
 
     <div id="phase1" class="phase">
-        <button class="btn" onclick="goToPhase2()">Bấm vô đây nè bé yêu ❤️</button>
+        <button class="btn-red" onclick="goToPhase2()">Bấm vô đây nè bé yêu ❤️</button>
     </div>
 
     <div id="phase2" class="phase">
         <div id="rain-container"></div>
-        <div class="cake-container">
-            <img id="cake-img" src="Banhkem2D.png" alt="Bánh kem bé heo">
+        <img class="cake-img" src="Banhkem2D.png" alt="Bánh kem">
+        <button class="btn-blue" onclick="goToPhase3()">Đọc Thư Tình 💌</button>
+    </div>
+
+    <div id="phase3" class="phase">
+        <div id="envelope" onclick="openLetter()">
+            <div class="envelope-box">
+                <div class="env-text">💌 Mở Thư Bé Ơi 💌</div>
+            </div>
         </div>
-        <button class="btn btn-blue" onclick="goToPhase4()">Đọc Thư & Kỷ Niệm</button>
+        <div id="open-letter">
+            <div style="font-size: 40px; color: #ff4d6d; margin-bottom: 10px; animation: pulse 1s infinite;">❤️</div>
+            <div id="message-text" style="font-size: 18px; line-height: 1.5; text-align: left; color: #333; min-height: 150px;"></div>
+            <img class="flower-corner" src="Hoa.png" alt="Hoa">
+            <button id="btn-next-p4" class="btn-green" style="display: none; margin: 20px auto 0;" onclick="goToPhase4()">Xem Kỷ Niệm Nè</button>
+        </div>
     </div>
 
     <div id="phase4" class="phase">
-        <h2 style="color: #ff4d4d; font-weight: bold; text-shadow: 1px 1px white; z-index: 10;">❤️ THỜI GIAN MÌNH BÊN NHAU ❤️</h2>
+        <h2 style="color: #ff4d6d; text-shadow: 2px 2px 0px #fff; z-index: 10; margin-top: 0;">💖 THỜI GIAN BÊN NHAU 💖</h2>
         
-        <div class="timer-box">
-            <div class="time-item"><span class="time-val" id="t-days">0</span><span class="time-label">Ngày</span></div>
-            <div class="time-item"><span class="time-val" id="t-hours">0</span><span class="time-label">Giờ</span></div>
-            <div class="time-item"><span class="time-val" id="t-mins">0</span><span class="time-label">Phút</span></div>
-            <div class="time-item"><span class="time-val" id="t-secs">0</span><span class="time-label">Giây</span></div>
+        <div class="timer-container">
+            <div class="time-box"><span class="time-num" id="t-days">0</span><span class="time-text">Ngày</span></div>
+            <div class="time-box"><span class="time-num" id="t-hours">0</span><span class="time-text">Giờ</span></div>
+            <div class="time-box"><span class="time-num" id="t-mins">0</span><span class="time-text">Phút</span></div>
+            <div class="time-box"><span class="time-num" id="t-secs">0</span><span class="time-text">Giây</span></div>
         </div>
 
-        <div class="album-container">
-            <img id="album-img" src="Ảnh1.jpeg" alt="Ảnh kỷ niệm">
+        <div class="album-box">
+            <img id="album-img" src="Ảnh1.png" alt="Kỷ niệm">
             <div class="controls">
-                <button class="btn-page" onclick="prevPage()">⬅ Lật Về</button>
-                <span id="page-indicator" style="font-weight: bold; color: #ff758c;">1 / 7</span>
-                <button class="btn-page" onclick="nextPage()">Lật Tới ➡</button>
+                <button class="btn-page" onclick="prevPage()">⬅ Về</button>
+                <span id="page-indicator" style="font-weight: bold; color: #ff4d6d; font-size: 18px;">1 / 11</span>
+                <button class="btn-page" onclick="nextPage()">Tới ➡</button>
             </div>
         </div>
-
-        <button class="btn" style="background: #007bff;" onclick="goToPhase5()">Nhận Món Quà Bí Mật ✨</button>
+        
+        <button class="btn-red" id="btn-go-qr" style="display: none;" onclick="goToPhase5()">Tiếp Tục Nè 🎁</button>
     </div>
 
     <div id="phase5" class="phase">
         <div class="qr-card">
-            <p>✨ Quét mã này bằng Zalo hoặc Camera để nhận điều bí mật tiếp theo nha bé yêu! ✨</p>
-            <img id="qr-img" src="anhmaQR.png" alt="Mã QR Bí Mật">
+            <h3 style="color: #d81b60; margin-top: 0; line-height: 1.4;">✨ Quét mã bằng Zalo hoặc Camera nha bé yêu! ✨</h3>
+            <img id="qr-img" src="QR.png" alt="Mã QR">
+            <br>
+            <button class="btn-blue" onclick="goToPhase6()">Đã Quét Xong & Tiếp Tục ✨</button>
+        </div>
+    </div>
+
+    <div id="phase6" class="phase">
+        <div class="galaxy-card">
+            <h2 style="margin-top: 0; color: #ff758c; text-shadow: 0 0 10px #ff758c; font-size: 28px;">Bạn đã sẵn sàng chưa? 💖</h2>
+            <p style="font-size: 18px; margin-bottom: 30px;">Món quà cuối cùng đang chờ em đó...</p>
+            <a href="https://dlove.vn/galaxy?id=1044eae9460b76f9" target="_blank" style="text-decoration: none;">
+                <button class="btn-red" style="padding: 20px 40px; font-size: 22px;">Mở Món Quà Cuối Cùng 🎁</button>
+            </a>
         </div>
     </div>
 
     <script>
-        // --- HÀM ÂM THANH AN TOÀN ---
+        // HÀM ÂM THANH
         function playSafe(id) {
             try {
                 let el = document.getElementById(id);
-                if (el) {
-                    let promise = el.play();
-                    if (promise !== undefined) {
-                        promise.catch(error => console.log("Trình duyệt chặn tự động phát nhạc:", error));
-                    }
-                }
+                if(el) { el.play().catch(() => {}); }
             } catch(e) {}
         }
-        function stopAllAudio() {
+        function stopAll() {
             try {
-                document.getElementById('sound-phaohoa').pause();
-                document.getElementById('sound-votay').pause();
-                document.getElementById('sound-chucmung').pause();
+                ['sound-phaohoa', 'sound-votay', 'sound-chucmung'].forEach(id => {
+                    let el = document.getElementById(id);
+                    if(el) { el.pause(); el.currentTime = 0; }
+                });
             } catch(e) {}
         }
 
-        // --- TẠO CHỮ RƠI PHASE 2 ---
-        function createSlowRain() {
+        // HIỆU ỨNG PHASE 2
+        function createRain() {
             const container = document.getElementById('rain-container');
-            const texts = ["Chúc mừng sinh nhật", "Anh Yêu Em ❤️", "Cục Vàng Của Anh", "Mãi Bên Nhau Nhé"];
-            for(let i=0; i<30; i++) {
+            const texts = ["Happy Birthday", "Anh Yêu Em ❤️", "Cục Dàng Của Anh", "Mãi Bên Nhau Nhé"];
+            for(let i=0; i<25; i++) {
                 let drop = document.createElement('div');
                 drop.className = 'falling-text';
                 drop.innerText = texts[Math.floor(Math.random() * texts.length)];
                 drop.style.left = Math.random() * 90 + 'vw';
-                drop.style.animationDuration = (Math.random() * 5 + 7) + 's';
-                drop.style.animationDelay = (Math.random() * 5) + 's';
+                drop.style.animationDuration = (Math.random() * 5 + 6) + 's';
+                drop.style.animationDelay = (Math.random() * 3) + 's';
                 container.appendChild(drop);
             }
         }
-
-        // --- HIỆU ỨNG BẮN PHÁO HOA ---
         function fireworkEffect() {
             if (typeof confetti === 'undefined') return;
-            var duration = 15 * 1000;
-            var animationEnd = Date.now() + duration;
-            var interval = setInterval(function() {
-                var timeLeft = animationEnd - Date.now();
-                if (timeLeft <= 0) { return clearInterval(interval); }
-                var particleCount = 50;
-                confetti({ particleCount, spread: 360, startVelocity: 30, origin: { x: Math.random(), y: Math.random() - 0.2 }, zIndex: 300 });
-            }, 250);
+            let end = Date.now() + 15000;
+            let interval = setInterval(function() {
+                if (Date.now() > end) return clearInterval(interval);
+                confetti({ particleCount: 50, spread: 360, origin: { x: Math.random(), y: Math.random() - 0.2 }, zIndex: 100 });
+            }, 300);
         }
 
-        // --- ĐẾM NGƯỢC THỜI GIAN KỶ NIỆM ---
-        // SỬA NGÀY BẮT ĐẦU YÊU NHAU Ở ĐÂY (Năm-Tháng-Ngày)
-        const startDate = new Date('2026-05-18T00:00:00'); 
-        function updateTimer() {
-            const now = new Date();
-            const diff = now - startDate;
+        // CHUYỂN TRANG
+        function goToPhase2() {
+            document.getElementById('phase1').style.display = 'none';
+            document.getElementById('phase2').style.display = 'flex';
+            playSafe('sound-phaohoa');
+            fireworkEffect();
+            createRain();
+        }
+
+        function goToPhase3() {
+            document.getElementById('phase2').style.display = 'none';
+            document.getElementById('phase3').style.display = 'flex';
+            stopAll();
+        }
+
+        // PHASE 3: HIỆU ỨNG GÕ CHỮ THƯ TÌNH
+        function openLetter() {
+            document.getElementById('envelope').style.display = 'none';
+            document.getElementById('open-letter').style.display = 'block';
+            playSafe('sound-votay');
+            
+            let count = 0;
+            let heartInt = setInterval(() => {
+                if(count > 10) clearInterval(heartInt);
+                let h = document.createElement('div');
+                h.className = 'heart-float';
+                h.innerText = '❤';
+                h.style.left = (Math.random() * 80 + 10) + '%';
+                h.style.bottom = '20px';
+                document.getElementById('open-letter').appendChild(h);
+                setTimeout(() => h.remove(), 2500);
+                count++;
+            }, 400);
+
+            const text = "Chúc cục dàng iuuu dấu của chồng 1 năm sinh nhật thật là vui vẻ nè. Chồng mong là chúng ta sau này và mãi về sau nữa sẽ ở bên nhau thật lâu luôn. Chúc cho cục kim cương iuuu dấu của chồng buổi sinh nhật vui vẻ và hạnh phúc đặc biệt năm nay có chồng nè. Chồng hy vọng chồng sẽ là người heo cảm thấy hạnh phúc, an toàn vui vẻ khi ở bên và hy vọng chồng sẽ là người cuối cùng của em ạ. Anh yêêêêêu emmm 💗";
+            let i = 0;
+            document.getElementById("message-text").innerHTML = "";
+            function typing() {
+                if (i < text.length) {
+                    document.getElementById("message-text").innerHTML += text.charAt(i);
+                    i++;
+                    setTimeout(typing, 40);
+                } else {
+                    document.getElementById('btn-next-p4').style.display = 'block';
+                }
+            }
+            setTimeout(typing, 500);
+        }
+
+        function goToPhase4() {
+            document.getElementById('phase3').style.display = 'none';
+            document.getElementById('phase4').style.display = 'flex';
+            stopAll();
+            playSafe('sound-chucmung');
+            
+            if (typeof confetti !== 'undefined') {
+                confetti({ particleCount: 200, spread: 160, origin: { y: 0.2 } });
+            }
+        }
+
+        // PHASE 4: ĐẾM NGÀY & LẬT 11 ẢNH
+        const startDate = new Date('2026-05-18T00:00:00');
+        setInterval(() => {
+            const diff = new Date() - startDate;
             document.getElementById('t-days').innerText = Math.floor(diff / (1000 * 60 * 60 * 24));
             document.getElementById('t-hours').innerText = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
             document.getElementById('t-mins').innerText = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
             document.getElementById('t-secs').innerText = Math.floor((diff % (1000 * 60)) / 1000);
-        }
-        setInterval(updateTimer, 1000);
+        }, 1000);
 
-        // --- LOGIC LẬT SÁCH ẢNH ---
-        let currentPage = 1;
-        const totalPages = 7; // Bạn có 7 ảnh từ Ảnh1.jpeg đến Ảnh7.jpeg
-        function updatePage() {
-            document.getElementById('album-img').src = `Ảnh${currentPage}.jpeg`;
-            document.getElementById('page-indicator').innerText = `${currentPage} / ${totalPages}`;
+        let page = 1;
+        const total = 11; // Tổng cộng 11 ảnh đuôi .png
+        function updateImg() {
+            document.getElementById('album-img').src = 'Ảnh' + page + '.png';
+            document.getElementById('page-indicator').innerText = page + ' / ' + total;
+            // Chỉ hiện nút đi tiếp khi xem tới ảnh 11
+            if(page === total) document.getElementById('btn-go-qr').style.display = 'inline-block';
+            else document.getElementById('btn-go-qr').style.display = 'none';
         }
-        function prevPage() { if(currentPage > 1) { currentPage--; updatePage(); } }
-        function nextPage() { if(currentPage < totalPages) { currentPage++; updatePage(); } }
-
-        // --- CHUYỂN TRANG ---
-        function goToPhase2() {
-            document.getElementById('phase1').style.display = 'none';
-            document.getElementById('phase2').style.display = 'flex';
-            playSafe('sound-chucmung');
-            playSafe('sound-phaohoa');
-            fireworkEffect();
-            createSlowRain();
-        }
-
-        function goToPhase4() {
-            document.getElementById('phase2').style.display = 'none';
-            document.getElementById('phase4').style.display = 'flex';
-            updateTimer();
-        }
+        function prevPage() { if(page > 1) { page--; updateImg(); } }
+        function nextPage() { if(page < total) { page++; updateImg(); } }
 
         function goToPhase5() {
             document.getElementById('phase4').style.display = 'none';
             document.getElementById('phase5').style.display = 'flex';
-            stopAllAudio();
-            playSafe('sound-votay');
+            stopAll();
+        }
+
+        // PHASE 6: TRANG LINK CUỐI CÙNG
+        function goToPhase6() {
+            document.getElementById('phase5').style.display = 'none';
+            document.getElementById('phase6').style.display = 'flex';
+            if (typeof confetti !== 'undefined') {
+                confetti({ particleCount: 150, spread: 100, origin: { y: 0.6 } });
+            }
         }
     </script>
 </body>
